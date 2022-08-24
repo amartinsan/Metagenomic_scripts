@@ -5,11 +5,13 @@ library("microbiome")
 library("biomformat")
 library("tidyverse")
 
+
 ############################
 
-#DEFINE PATHS
+path <- readline(prompt="Enter full path of .fastq files to process without quotes")
 
-#path="/opt/Alchemycode/HG-2.0/seqs/"
+#path="MANUAL PATH EDIT"
+
 list.files(path)
 fnFs <- sort(list.files(path, pattern="_R1_001.fastq", full.names = TRUE))
 fnRs <- sort(list.files(path, pattern="_R2_001.fastq", full.names = TRUE)
