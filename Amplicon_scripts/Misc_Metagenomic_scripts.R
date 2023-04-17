@@ -1,4 +1,5 @@
 #Normalize counts to CSS, way better for ordinations and not depending in rarefaction
+#Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible (https://doi.org/10.1371/journal.pcbi.1003531)
 library(metagenomeSeq)
 MGS <- phyloseq_to_metagenomeSeq(physeq)
 p <- cumNormStatFast(MGS)
