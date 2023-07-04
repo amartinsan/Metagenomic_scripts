@@ -1,5 +1,5 @@
 
-#How to
+## How to
 
 Used in this paper: https://www.frontiersin.org/articles/10.3389/fmicb.2020.01825/full
 
