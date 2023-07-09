@@ -1,4 +1,6 @@
-Using fastqc and multiqc to analyze quality and make an easy report.
+Using fastqc and multiqc to analyze quality of seqs and make an easy report.
+
+-needs fastqc and multiqc installed
 
 (fastp is another option)
 
@@ -13,27 +15,30 @@ Using fastqc and multiqc to analyze quality and make an easy report.
 
 AWK scripts for different stuff	
 
+
+
+
+
 Calculate sequene lenght of a fasta for each sequence in a fasta file
 Determine sequence length for each sequence in the file
-```
-awk '/^>/ {if (seqlen){print seqlen}; print ;seqlen=0;next; } { seqlen += length($0)}END{print seqlen}' input.fasta > output.fasta
-awk '/^>/{if (l!="") print l; print; l=0; next}{l+=length($0)}END{print l}' input.fasta > output.fasta
-cat input.fastq | awk '{if(NR%4==2) print length($1)}' > length.txt
-cat input.fasta | awk '{if(NR%4==0) print length($1)}' > length.txt
-cat input.fasta | awk '{if(NR%%4==2) print length(\$1)}' | sort -c > length.txt
 
-```
+	awk '/^>/ {if (seqlen){print seqlen}; print ;seqlen=0;next; } { seqlen += length($0)}END{print seqlen}' input.fasta > output.fasta
+	awk '/^>/{if (l!="") print l; print; l=0; next}{l+=length($0)}END{print l}' input.fasta > output.fasta
+	cat input.fastq | awk '{if(NR%4==2) print length($1)}' > length.txt
+	cat input.fasta | awk '{if(NR%4==0) print length($1)}' > length.txt
+	cat input.fasta | awk '{if(NR%%4==2) print length(\$1)}' | sort -c > length.txt
+
 
 Get a histogram of sequence lengths from FASTA/Q files 
-```
-cat input.fastq | awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c > output.fasta
-cat input.fasta | awk '{if(NR%4==0) print length($1)}' | sort -n | uniq -c > output.fasta
-```
+
+	cat input.fastq | awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c > output.fasta
+	cat input.fasta | awk '{if(NR%4==0) print length($1)}' | sort -n | uniq -c > output.fasta
+
 
 Calculate mean length of the seqs contained in a .fasta file
-```
-awk '{/>/&&++a||b+=length()}END{print b/a}' input.fasta > output.fasta
-```
+
+	awk '{/>/&&++a||b+=length()}END{print b/a}' input.fasta > output.fasta
+
 
 Replace the header with numerical sequence 1 to N number of reads in the file.fasta 
 ```
