@@ -16,72 +16,52 @@ AWK scripts for different stuff
 Get sequence lenght of each sequences in  .fasta 
 
         awk '/^>/ {if (seqlen){print seqlen}; print ;seqlen=0;next; } { seqlen += length($0)}END{print seqlen}' $$DESIRED.fasta$$ > fasta_lenght.txt
+	
 	#awk '/^>/{if (l!="") print l; print; l=0; next}{l+=length($0)}END{print l}' $FASTA of interest$$$ > fasta.lenght.txt
 
-Calculate mean length of the sequences in a .fasta e
+Calculate mean length of the sequences in a .fasta
 
 	awk '{/>/&&++a||b+=length()}END{print b/a}' input.fasta > meanleneght_FASTANAME.fasta
 
+Add a string after the header, maybe a suffix or another header
 
-Replace the header with numerical sequence 1 to N number of reads in the file.fasta 
+	awk '/^>/ {$0=$0 "WRITE-TEXT"}1' input.fasta > extraheder.fasta
 
-	awk '/^>/{print ">" ++i; next}{print}' input.fasta > output.fasta
+Now with sed, prefix/suffix
+	
+	sed "s/>/>WRITE-TEXT/" input.fasta > output.fasta
+	sed 's/^>/>SampleA/g' input.fasta > output.fasta
 
 
-Add a string after the original sequence header
-```
-awk '/^>/ {$0=$0 "some random text"}1' input.fasta > output.fasta
-sed "s/>/>whateveryouwant/" input.fasta > output.fasta
-sed 's/^>/>SampleA/g' input.fasta > output.fasta
+Replace the whole header with any string 
 
-```
+	awk '/^>/{print ">WRITE-TEXT" ++i; next}{print}' input.fasta > replaceHeader.fasta
+	sed 's/>.*/>WRITE-text/' input.fasta > replaceHeader.fasta
 
-Replace the sequence header names with a string
-```
-awk '/^>/{print ">whateveryouwant" ++i; next}{print}' input.fasta > output.fasta
-sed 's/>.*/>whateveryouwant/' input.fasta > output.fasta
-sed 's/^\(>.*\)$/\1 somem text to add/' input.fasta > output.fasta
-```
 
-Remove column 3 of a file.txt 
-```
-awk '!($3="")' input.txt  > output.txt 
-```
+Remove duplicated sequences, you can also use CD-HITo.
 
-Remove duplicated sequences
-```
-sed -e '/^>/s/$/@/' -e 's/^>/#/' input.fasta | tr -d '\n' | tr "#" "\n" | tr "@" "\t" | sort -u -t $'\t' -f -k 2,2  | sed -e 's/^/>/' -e 's/\t/\n/' > output.fasta
-```
 
-Remove evrything before or after the | pipe character in each line
-```
-sed 's/^.*|//' ids.txt 
-sed 's/|.*//' ids.txt
-```
+	sed -e '/^>/s/$/@/' -e 's/^>/#/' input.fasta | tr -d '\n' |
+	 tr "#" "\n" | tr "@" "\t" | 
+	sort -u -t $'\t' -f -k 2,2  | 
+	sed -e 's/^/>/' -e 's/\t/\n/' > NOduplicate_output.fasta
 
-Remove last part of a read header after a space
-```
-sed '/^@/s/\s.*$//' input.fastq > output.fastq
-```
 
-Re-arrange columns postions, using tab as a comun delimiter, in .txt file
-```
-awk 'BEGIN {OFS="\t"}; { print $1,$2,$3,$4,$15 " " $14}' input.txt  > output.txt
-```
 
-Count lines of a file
-```
-cat input.fasta | wc -l
-cat input.fasta | sed -n '$='
-```
+Snipet to re-arrenge columns positions, wors on a tsv, substitute "\t" for any other separator.e
+
+	awk 'BEGIN {OFS="\t"}; { print $1,$2,$3,$4,$15 " " $14}' input.txt  > rearrengeTEXT.txt
 
 Count sequencs in .fasta/.fastq or .gz file
-```
-grep -c "^>" input.fasta
-grep -c "^@" input.fasta
-cat input.fasta | echo $(("wc -l"/4))
-zcat *.fastq.gz | echo $((`wc -l`/4))
-```
+
+	grep -c "^>" input.fasta
+	grep ">" input.fasta| wc -l 
+	grep -c "^@" input.fasta
+
+In a .gz file (fasta)
+
+	zcat *.fastq.gz | echo $((`wc -l`/4))
 
 Count the total number of sequences present in each different read files 
 ```
