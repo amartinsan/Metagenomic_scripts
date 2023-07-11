@@ -1,3 +1,7 @@
+#### Copyright © 2023 Adrian M.S, M.Sc.
+#### email: 4dri4nms@gmail.com
+
+
 Using fastqc and multiqc to analyze quality of seqs and make an easy report.
 
 -needs fastqc and multiqc installed
