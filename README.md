@@ -7,3 +7,6 @@ Repository in various scripts and snippets of code used in mostly bioinformatic 
 
 From school work, to M.Sc. and bioinformatics jobs
 
+
+
+Misc bash code used for various pourposes: [bash](https://github.com/amartinsan/Metagenomic_scripts/tree/main/Bashscript)
