@@ -1,0 +1,70 @@
+
+
+
+	#mkdir Forward ; mkdir Reverse
+
+	#mv *R2.fastq Forward/ ; mv R1.fastq Reverse/
+
+	for file in *.fastq.gz ; do    fastqc $file ; done  && multiqc .
+
+
+
+ awk '/^>/ {if (seqlen){print seqlen}; print ;seqlen=0;next; } { seqlen += length($0)}END{print seqlen}' $$DESIRED.fasta$$ > fasta_lenght.txt
+#awk '/^>/{if (l!="") print l; print; l=0; next}{l+=length($0)}END{print l}' $FASTA of interest$$$ > fasta.lenght.txt
+
+awk '{/>/&&++a||b+=length()}END{print b/a}' input.fasta > meanleneght_FASTANAME.fasta
+
+
+
+	awk '/^>/ {$0=$0 "WRITE-TEXT"}1' input.fasta > extraheder.fasta
+
+
+	
+	sed "s/>/>WRITE-TEXT/" input.fasta > output.fasta
+	sed 's/^>/>SampleA/g' input.fasta > output.fasta
+
+
+
+
+	awk '/^>/{print ">WRITE-TEXT" ++i; next}{print}' input.fasta > replaceHeader.fasta
+	sed 's/>.*/>WRITE-text/' input.fasta > replaceHeader.fasta
+
+
+
+
+
+	sed -e '/^>/s/$/@/' -e 's/^>/#/' input.fasta | tr -d '\n' |
+	 tr "#" "\n" | tr "@" "\t" | 
+	sort -u -t $'\t' -f -k 2,2  | 
+	sed -e 's/^/>/' -e 's/\t/\n/' > NOduplicate_output.fasta
+
+
+
+
+	awk 'BEGIN {OFS="\t"}; { print $1,$2,$3,$4,$15 " " $14}' input.txt  > rearrengeTEXT.txt
+
+
+
+	grep -c "^>" input.fasta
+	grep ">" input.fasta| wc -l 
+	grep -c "^@" input.fasta
+
+
+	zcat *.fastq.gz | echo $((`wc -l`/4))
+
+
+	for i in *.fasta; do 
+	grep -c "^>" $i; 
+	done
+
+	for i in *.fastq; do 
+	grep -c "^+$" $i; 
+	done
+
+	for i in *.fastq.gz; do 
+	echo $(zcat ${i} | wc -l)/4|bc;
+	done
+
+
+	cat input.fasta | paste - - - - | awk 'length($2)  >= 21 && length($2) <= 25' | sed 's/\t/\n/g' > output.fasta
+	awk 'BEGIN {OFS = "\n"} {header = $0 ; getline seq ; getline qheader ; getline qseq ; if (length(seq) >= 21 && length(seq) <= 25) {print header, seq, qheader, qseq}}' input.fasta > output.fasta
