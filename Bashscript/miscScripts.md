@@ -57,7 +57,7 @@ Snipet to re-arrenge columns positions, wors on a tsv, substitute "\t" for any o
 
 	awk 'BEGIN {OFS="\t"}; { print $1,$2,$3,$4,$15 " " $14}' input.txt  > rearrengeTEXT.txt
 
-Count sequencs in .fasta/.fastq or .gz file
+Count sequences in .fasta/.fastq or .gz file
 
 	grep -c "^>" input.fasta
 	grep ">" input.fasta| wc -l 
@@ -67,9 +67,8 @@ In a .gz file (fasta)
 
 	zcat *.fastq.gz | echo $((`wc -l`/4))
 
-To couant the number of sequence in different read files, for to cycle all .fasta or .fastq files
+To count the number of sequence in different read files, for to cycle all .fasta or .fastq files
 
-Count the total number of sequences present in each different read files 
 
 	for i in *.fasta; do 
 	grep -c "^>" $i; 
