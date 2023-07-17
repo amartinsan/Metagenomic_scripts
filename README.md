@@ -18,4 +18,8 @@ Misc bash code used for various purposes: [bash](https://github.com/amartinsan/M
 
 Using R to make maps: [mapsR](https://github.com/amartinsan/Metagenomic_scripts/tree/main/Maps_in_r)
 
-Qiime2 pipeline 
+Qiime2 pipeline and extras : [QIIME2](https://github.com/amartinsan/Metagenomic_scripts/tree/main/Qiime2) 
+
+Squeezmeta and SQMtools scripts:
+
+Analyzing SNPs data: 
