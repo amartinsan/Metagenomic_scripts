@@ -23,3 +23,6 @@ Qiime2 pipeline and extras : [QIIME2](https://github.com/amartinsan/Metagenomic_
 Squeezmeta and SQMtools scripts:
 
 Analyzing SNPs data: 
+
+Python and Biopython snippets: 
+
